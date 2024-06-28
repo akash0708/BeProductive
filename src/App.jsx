@@ -1,13 +1,11 @@
 import './App.css'
-import DashBoard from './components/DashBoard'
 
 function App() {
-
   return (
     <>
-     <DashBoard />
+    <h1>Hello World!</h1>
     </>
   )
 }
 
-export default App
+export default App;
