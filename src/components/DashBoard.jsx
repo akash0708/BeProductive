@@ -6,8 +6,8 @@ import BarChart from './BarChart'
 const DashBoard = () => {
   return (
     <>
-    <div className='flex justify-end'>
-    <div className='w-4/5 flex flex-wrap gap-5'>
+    <div className='flex justify-end m-10'>
+    <div className='flex flex-wrap gap-5'>
         <div className='w-1/3 h-2/5 border-2 rounded-xl'>
         <LineChart />
         </div>

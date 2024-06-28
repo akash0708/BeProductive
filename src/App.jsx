@@ -9,6 +9,7 @@ import {
 import "./App.css";
 import Sidebar from "./components/Sidebar";
 import { Link } from "react-router-dom";
+import DashBoard from './components/DashBoard';
 
 function App() {
   return (
@@ -38,7 +39,9 @@ function App() {
         <p className="font-poppins text-lg">Dashboard</p>
       </div>
     </div>
-    <div className="main w-4/5 h-full bg-green-500 rounded-lg">Main</div>
+    <div className="w-4/5 h-full rounded-lg">
+      <DashBoard />
+    </div>
   </div>
   </>
   )
