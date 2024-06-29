@@ -1,7 +1,11 @@
-import React from "react";
+import React from 'react'
 
 const Todos = () => {
-  return <div className="w-full h-full bg-black">Todos</div>;
-};
+  return (
+    <div>
+      Todos
+    </div>
+  )
+}
 
-export default Todos;
+export default Todos

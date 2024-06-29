@@ -3,7 +3,7 @@ import React from 'react'
 const Summarizer = () => {
   return (
     <div>
-      Summ
+      Summarizer
     </div>
   )
 }
