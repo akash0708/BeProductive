@@ -12,7 +12,6 @@ import {
   Link,
   Outlet,
   RouterProvider,
-  Routes,
   createBrowserRouter,
 } from "react-router-dom";
 import Todos from "./components/Todos";
