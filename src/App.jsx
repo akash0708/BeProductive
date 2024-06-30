@@ -20,9 +20,12 @@ import DashBoard from "./components/DashBoard";
 import Rooms from "./components/Rooms";
 import Videos from "./components/Videos";
 import VideoPlayer from "./components/VideoPlayer";
+
 import Chatbot from "./components/Chatbot"
 import { useState } from "react";
-// import Bal from "./components/Bal";
+import Home from "./components/Home";
+import CreateRoom from "./components/CreateRoom";
+import AllRooms from "./components/AllRooms";
 
 function App() {
   const Layout = () => {
@@ -85,7 +88,15 @@ function App() {
       children: [
         {
           path: "/",
-          element: <Rooms />,
+          element: <Home />,
+        },
+        {
+          path: "/createroom",
+          element: <CreateRoom />,
+        },
+        {
+          path: "/allrooms",
+          element: <AllRooms />,
         },
         {
           path: "/todos",

@@ -27,7 +27,7 @@ const Summarizer = () => {
     setVideoId("");
     console.log("Clicked");
     // Call the API to summarize the video
-    const url = `http://127.0.0.1:5000/summarize/${getYouTubeVideoId(videoId)}`;
+    const url = `http://127.0.0.1:5002/summarize/${getYouTubeVideoId(videoId)}`;
 
     // Making the GET request
     axios
