@@ -6,10 +6,10 @@ ChartJS.register(BarElement, CategoryScale, LinearScale, Title, Tooltip, Legend)
 
 const BarChart = () => {
   const data = {
-    labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
     datasets: [
       {
-        label: '# of Votes',
+        label: 'over last six days',
         data: [12, 19, 3, 5, 2, 3],
         backgroundColor: [
           'rgba(255, 99, 132, 0.2)',
@@ -41,7 +41,7 @@ const BarChart = () => {
       },
       title: {
         display: true,
-        text: 'Bar Chart Example',
+        text: 'Distraction Score',
       },
     },
     scales: {
