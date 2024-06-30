@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediaPipe Face Mesh with TensorFlow.js</title>
+    <style>
+        #outputCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        video {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <video id="inputVideo" autoplay></video>
+    <canvas id="outputCanvas"></canvas>
+
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+    <script>
+        const videoElement = document.getElementById('inputVideo');
+        const canvasElement = document.getElementById('outputCanvas');
+        const canvasCtx = canvasElement.getContext('2d');
+
+        async function onResults(results) {
+            canvasElement.width = videoElement.videoWidth;
+            canvasElement.height = videoElement.videoHeight;
+
+            canvasCtx.save();
+            canvasCtx.clearRect(0, 0, canvasElement.width, canvasElement.height);
+            canvasCtx.drawImage(results.image, 0, 0, canvasElement.width, canvasElement.height);
+
+            if (results.multiFaceLandmarks) {
+                for (const landmarks of results.multiFaceLandmarks) {
+                    drawConnectors(canvasCtx, landmarks, FACEMESH_TESSELATION, {color: '#C0C0C070', lineWidth: 1});
+                    drawLandmarks(canvasCtx, landmarks, {color: '#FF3030', lineWidth: 1});
+                }
+
+                const angles = calculateHeadPose(results.multiFaceLandmarks[0], videoElement.videoWidth, videoElement.videoHeight);
+                const headPosition = determineHeadPosition(angles[0], angles[1]);
+
+                canvasCtx.font = '20px Arial';
+                canvasCtx.fillStyle = 'green';
+                canvasCtx.fillText(`Distraction: ${headPosition}`, 20, 50);
+            }
+            canvasCtx.restore();
+        }
+
+        const faceMesh = new FaceMesh({locateFile: (file) => {
+            return `https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/${file}`;
+        }});
+        faceMesh.setOptions({
+            maxNumFaces: 1,
+            minDetectionConfidence: 0.5,
+            minTrackingConfidence: 0.5
+        });
+        faceMesh.onResults(onResults);
+
+        const camera = new Camera(videoElement, {
+            onFrame: async () => {
+                await faceMesh.send({image: videoElement});
+            },
+            width: 640,
+            height: 480
+        });
+        camera.start();
+
+        function calculateHeadPose(landmarks, width, height) {
+            const keyLandmarks = [33, 263, 1, 61, 291, 199];
+            const twoMat = keyLandmarks.map(index => [landmarks[index].x * width, landmarks[index].y * height]);
+            const threeMat = keyLandmarks.map(index => [landmarks[index].x * width, landmarks[index].y * height, landmarks[index].z]);
+
+            // Placeholder for pose calculation
+            // Return dummy values as an example
+            return [0, 0, 0];
+        }
+
+        function determineHeadPosition(xAngle, yAngle) {
+            if (yAngle < -11) {
+                return "Left";
+            } else if (yAngle > 11) {
+                return "Right";
+            } else if (xAngle < -15) {
+                return "Down";
+            } else if (xAngle > 13) {
+                return "Up";
+            } else {
+                return "Forward";
+            }
+        }
+    </script>
+</body>
+</html>
